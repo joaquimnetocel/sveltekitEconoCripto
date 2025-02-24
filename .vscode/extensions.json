@@ -3,6 +3,7 @@
 		"esbenp.prettier-vscode", // PRETTIER
 		"svelte.svelte-vscode", // SVELTE FOR VS CODE
 		"dbaeumer.vscode-eslint", // ESLINT
-		"natqe.reload" // RELOAD
+		"natqe.reload", // RELOAD
+		"chanzhaoyu.svelte-5-snippets" // SVELTE 5 SNIPPETS
 	]
 }
