@@ -18,6 +18,11 @@
 	/////
 	// GIT:
 	"git.autofetch": true, // COMMITS WILL AUTOMATICALLY BE FETCHED FROM THE DEFAULT REMOTE OF THE CURRENT GIT REPOSITORY.
-	"git.enableSmartCommit": true // COMMIT ALL CHANGES WHEN THERE ARE NO STAGED CHANGES.
+	"git.enableSmartCommit": true, // COMMIT ALL CHANGES WHEN THERE ARE NO STAGED CHANGES.
+	/////
+	// TAB:
+	"editor.insertSpaces": false, // VSCODE WON'T INSERT SPACES WHEN PRESSING 'TAB'.
+	"editor.tabSize": 4, // THE NUMBER OF SPACES A TAB IS EQUAL TO.
+	"editor.detectIndentation": false // DISABLE 'editor.tabSize' AND 'editor.insertSpaces' AUTOMATIC DETECTION BASED ON THE FILE CONTENTS.
 	/////
 }
