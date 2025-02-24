@@ -14,6 +14,10 @@
 	"svelte.enable-ts-plugin": true, // 'SVELTE FOR VS CODE' TYPESCRIPT PLUGIN WHICH PROVIDES INTELLISENSE FOR SVELTE FILES INSIDE TS/JS FILES.
 	"files.associations": {
 		"*.json": "jsonc" // ENABLE COMMENTS IN JSON FILES.
-	}
+	},
+	/////
+	// GIT:
+	"git.autofetch": true, // COMMITS WILL AUTOMATICALLY BE FETCHED FROM THE DEFAULT REMOTE OF THE CURRENT GIT REPOSITORY.
+	"git.enableSmartCommit": true // COMMIT ALL CHANGES WHEN THERE ARE NO STAGED CHANGES.
 	/////
 }
