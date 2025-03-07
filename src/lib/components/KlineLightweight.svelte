@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { functionFormatDate } from '$lib/functions/functionFormatDate';
 	import type { typeKline } from '$lib/types/typeKline';
 	import {
 		CandlestickSeries,
@@ -24,13 +23,6 @@
 			},
 		},
 	};
-	// const lightweightData: CandlestickData<Time>[] = data.map((current) => {
-	// 	const { time, ...rest } = current;
-	// 	return {
-	// 		...rest,
-	// 		time: functionFormatDate(time),
-	// 	};
-	// });
 
 	$effect(() => {
 		const aux = document.getElementById('container');
