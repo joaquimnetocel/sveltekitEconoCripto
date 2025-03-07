@@ -1,0 +1,13 @@
+Significado de cada valor:
+timestamp: O horário de abertura da vela em milissegundos desde a época Unix (1970-01-01 00:00:00 UTC).
+open: O preço de abertura da vela (o preço da primeira transação no intervalo de tempo).
+high: O preço mais alto durante o intervalo de tempo (o preço mais alto atingido durante os 5 minutos).
+low: O preço mais baixo durante o intervalo de tempo (o preço mais baixo atingido durante os 5 minutos).
+close: O preço de fechamento da vela (o preço da última transação no intervalo de tempo).
+volume: O volume total negociado do par de moedas durante esse intervalo de tempo, em termos da base da moeda (neste caso, o BTC).
+close_time: O timestamp do momento em que o intervalo de tempo (a vela) foi fechado.
+quote_asset_volume: O volume total negociado, mas expresso no ativo de cotação (neste caso, USDT).
+number_of_trades: O número total de transações realizadas durante o intervalo de tempo.
+taker_buy_base_asset_volume: O volume de compras feitas pelo taker (quem está comprando ou vendendo ao preço de mercado) do ativo base (BTC).
+taker_buy_quote_asset_volume: O volume de compras feitas pelo taker do ativo de cotação (USDT).
+ignore: Este valor é ignorado e não é utilizado em geral.
