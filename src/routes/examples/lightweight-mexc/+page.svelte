@@ -1,8 +1,9 @@
 <script lang="ts">
-	import KlineLightweight from '$lib/components/KlineLightweight.svelte';
-	import type { PageData } from './$types';
+	import Grafico from './Grafico.svelte';
 
-	const { data }: { data: PageData } = $props();
+	const symbols = ['BTCUSDT', 'SOLUSDT', 'ETHUSDT'];
 </script>
 
-<KlineLightweight data={data.candles} />
+{#each symbols as current}
+	<Grafico moeda={current} periodo="1m" />
+{/each}

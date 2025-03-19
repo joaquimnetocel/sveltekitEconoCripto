@@ -1,11 +1,14 @@
 import { functionKlineMexc } from '$lib/functions/functionKlineMexc';
 import type { typeKline } from '$lib/types/typeKline';
-import type { PageServerLoad } from './$types';
+import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
-export const load: PageServerLoad = async () => {
+export const GET: RequestHandler = async ({ url }) => {
+	const moeda = url.searchParams.get('moeda') ?? 'BTCUSDT';
+	const periodo = url.searchParams.get('periodo') ?? '1d';
 	const dados = functionKlineMexc({
-		symbol: 'BTCUSDT',
-		interval: '5m',
+		symbol: moeda,
+		interval: periodo,
 		limit: 100,
 	});
 	const candles: typeKline[] = dados.map((current) => {
@@ -13,7 +16,5 @@ export const load: PageServerLoad = async () => {
 		return { close, high, low, open, time };
 	});
 
-	return {
-		candles,
-	};
+	return json(candles);
 };

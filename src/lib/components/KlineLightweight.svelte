@@ -8,12 +8,15 @@
 		type DeepPartial,
 		type Time,
 	} from 'lightweight-charts';
+	import { untrack } from 'svelte';
 
 	let {
 		data,
 	}: {
 		data: typeKline[];
 	} = $props();
+
+	let div = $state<HTMLDivElement>();
 
 	const chartOptions: DeepPartial<ChartOptions> = {
 		layout: {
@@ -24,21 +27,31 @@
 		},
 	};
 
+	let candlestickSeries: ReturnType<typeof createChart>['addSeries'] extends (
+		type: infer T,
+		options?: infer O,
+	) => infer R
+		? R
+		: never;
+
 	$effect(() => {
-		const aux = document.getElementById('container');
-		if (aux) {
-			const chart = createChart(aux, chartOptions);
-			const candlestickSeries = chart.addSeries(CandlestickSeries, {
+		if (div) {
+			const chart = createChart(div, chartOptions);
+			candlestickSeries = chart.addSeries(CandlestickSeries, {
 				upColor: '#26a69a',
 				downColor: '#ef5350',
 				borderVisible: false,
 				wickUpColor: '#26a69a',
 				wickDownColor: '#ef5350',
 			});
-			candlestickSeries.setData(data as CandlestickData<Time>[]);
+			candlestickSeries.setData(untrack(() => data) as CandlestickData<Time>[]);
 			chart.timeScale().fitContent();
 		}
 	});
+
+	$effect(() => {
+		candlestickSeries.setData(data as CandlestickData<Time>[]);
+	});
 </script>
 
-<div id="container" style="width: 100%; height: 300px;"></div>
+<div bind:this={div} id="divGrafico" style="width: 100%; height: 300px;"></div>

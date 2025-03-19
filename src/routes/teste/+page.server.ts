@@ -1,8 +1,8 @@
-import { functionKline } from '$lib/functions/functionKlineMexc';
+import { functionKlineMexc } from '$lib/functions/functionKlineMexc';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const dados = functionKline({
+	const dados = functionKlineMexc({
 		symbol: 'BTCUSDT',
 		interval: '5m',
 		limit: 5,
