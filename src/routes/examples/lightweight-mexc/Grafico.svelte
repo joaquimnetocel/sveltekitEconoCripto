@@ -1,6 +1,7 @@
 <script lang="ts">
 	import KlineLightweight from '$lib/components/KlineLightweight.svelte';
 	import type { typeKline } from '$lib/types/typeKline';
+	import type { typePeriodo } from '$lib/types/typePeriodo';
 
 	let {
 		moeda,
@@ -8,7 +9,7 @@
 		segundos = 5,
 	}: {
 		moeda: string;
-		periodo?: '1d' | '5m' | '1m';
+		periodo?: typePeriodo;
 		segundos?: number;
 	} = $props();
 
@@ -26,7 +27,7 @@
 </script>
 
 {#await functionLoadData()}
-	CARREGANDO...
+	<div>CARREGANDO...</div>
 	<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 {:then _}
 	<div>
