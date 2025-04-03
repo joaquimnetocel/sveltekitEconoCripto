@@ -18,7 +18,7 @@
 	async function functionLoadData() {
 		const response = await fetch(`/examples/lightweight-alpaca?moeda=${moeda}&periodo=${periodo}`);
 		estadoCandles = await response.json();
-		console.log(estadoCandles?.[29]);
+		console.log(estadoCandles);
 	}
 
 	$effect(() => {

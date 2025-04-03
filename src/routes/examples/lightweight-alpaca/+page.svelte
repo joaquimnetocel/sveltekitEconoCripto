@@ -6,7 +6,7 @@
 	import Grafico from './Grafico.svelte';
 
 	let moeda = $state<typeMoedaAlpaca>('BTC/USD');
-	let periodo = $state<typePeriodoAlpaca>('1Min');
+	let periodo = $state<typePeriodoAlpaca>('1D');
 </script>
 
 <select bind:value={moeda}>

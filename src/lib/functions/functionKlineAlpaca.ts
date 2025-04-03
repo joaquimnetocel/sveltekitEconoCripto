@@ -1,3 +1,5 @@
+import type { typePeriodoAlpaca } from '$lib/types/typePeriodoAlpaca';
+
 export async function functionKlineAlpaca({
 	symbol,
 	interval,
@@ -5,7 +7,7 @@ export async function functionKlineAlpaca({
 	fetch,
 }: {
 	symbol: string;
-	interval: string;
+	interval: typePeriodoAlpaca;
 	limit: number;
 	fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }) {
@@ -16,8 +18,28 @@ export async function functionKlineAlpaca({
 		startDate.setDate(now.getDate() - limit);
 		const startISO = startDate.toISOString();
 		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${encodeURIComponent(startISO)}&sort=asc`;
-	} else {
-		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&limit=${limit}&sort=asc`;
+	} else if (interval.includes('1Min')) {
+		const now = new Date();
+		now.setMinutes(now.getMinutes() - limit);
+		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
+	} else if (interval.includes('5Min')) {
+		const now = new Date();
+		now.setMinutes(now.getMinutes() - limit * 5);
+		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
+	} else if (interval.includes('15Min')) {
+		const now = new Date();
+		now.setMinutes(now.getMinutes() - limit * 15);
+		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
+		console.log(timestamp);
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
+	} else if (interval.includes('1H')) {
+		const now = new Date();
+		now.setHours(now.getHours() - limit);
+		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
+		console.log(url);
 	}
 
 	const result = await fetch(url);
