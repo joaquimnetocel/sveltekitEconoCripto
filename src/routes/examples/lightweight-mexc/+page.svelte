@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { constMoedas } from '$lib/constantes/constMoedas';
-	import { constPeriodos } from '$lib/constantes/constPeriodos';
-	import type { typeMoeda } from '$lib/types/typeMoeda';
-	import type { typePeriodo } from '$lib/types/typePeriodo';
+	import { constMoedasMexc } from '$lib/constantes/constMoedasMexc';
+	import { constPeriodosMexc } from '$lib/constantes/constPeriodosMexc';
+	import type { typeMoedaMexc } from '$lib/types/typeMoedaMexc';
+	import type { typePeriodoMexc } from '$lib/types/typePeriodoMexc';
 	import Grafico from './Grafico.svelte';
 
-	let moeda = $state<typeMoeda>('BTCUSDT');
-	let periodo = $state<typePeriodo>('1d');
+	let moeda = $state<typeMoedaMexc>('BTCUSDT');
+	let periodo = $state<typePeriodoMexc>('1d');
 </script>
 
 <select bind:value={moeda}>
-	{#each constMoedas as current}
+	{#each constMoedasMexc as current}
 		<option value={current}>{current}</option>
 	{/each}
 </select>
 
 <select bind:value={periodo}>
-	{#each constPeriodos as current}
+	{#each constPeriodosMexc as current}
 		<option value={current}>{current}</option>
 	{/each}
 </select>
