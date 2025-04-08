@@ -7,7 +7,7 @@ import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url, fetch }) => {
 	const moeda = url.searchParams.get('moeda') ?? 'BTC/USD';
-	const periodo = url.searchParams.get('periodo') ?? '1D';
+	const periodo = url.searchParams.get('periodo') ?? '1Day';
 	const dados = await functionKlineAlpaca({
 		symbol: moeda as typeMoedaAlpaca,
 		interval: periodo as typePeriodoAlpaca,

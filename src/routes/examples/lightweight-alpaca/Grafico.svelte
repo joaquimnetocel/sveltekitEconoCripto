@@ -4,35 +4,54 @@
 	import type { typePeriodoAlpaca } from '$lib/types/typePeriodoAlpaca';
 
 	let {
+		agora,
 		moeda,
-		periodo = '1D',
-		segundos = 5,
+		periodo = '1Day',
 	}: {
+		agora: Date;
 		moeda: string;
 		periodo?: typePeriodoAlpaca;
-		segundos?: number;
 	} = $props();
 
-	let estadoCandles = $state<typeKline[]>();
-
-	async function functionLoadData() {
-		const response = await fetch(`/examples/lightweight-alpaca?moeda=${moeda}&periodo=${periodo}`);
-		estadoCandles = await response.json();
-		console.log(estadoCandles);
-	}
+	let estadoVelas = $state<typeKline[]>();
 
 	$effect(() => {
-		const intervalo = setInterval(functionLoadData, segundos * 1000);
+		const intervalo = setInterval(funcaoLerDados, funcaoPeriodoParaSegundos(periodo) * 1000);
+		// const intervalo = setInterval(funcaoLerDados, 5 * 1000);
 		return () => clearInterval(intervalo); // LIMPA AO DESMONTAR.
 	});
+
+	async function funcaoLerDados() {
+		const resposta = await fetch(`/examples/lightweight-alpaca?moeda=${moeda}&periodo=${periodo}`);
+		estadoVelas = await resposta.json();
+		console.log(estadoVelas);
+	}
+
+	function funcaoPeriodoParaSegundos(par: typePeriodoAlpaca) {
+		if (par === '15Min') {
+			const numberMinutosRestantes =
+				15 - (agora.getMinutes() - Math.floor(agora.getMinutes() / 15) * 15);
+			return numberMinutosRestantes * 60;
+		} else if (par === '5Min') {
+			const numberMinutosRestantes =
+				5 - (agora.getMinutes() - Math.floor(agora.getMinutes() / 5) * 5);
+			return numberMinutosRestantes * 60;
+		} else if (par === '1Min') {
+			return 60 - agora.getSeconds() + 3;
+		} else if (par === '1Hour') {
+			const numberMinutosRestantes = 60 - agora.getMinutes() + 1;
+			return 60 * numberMinutosRestantes;
+		}
+		return 10000000000000;
+	}
 </script>
 
-{#await functionLoadData()}
+{#await funcaoLerDados()}
 	<div>CARREGANDO...</div>
 	<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 {:then _}
 	<div>
 		{moeda} ({periodo})
 	</div>
-	<KlineLightweight data={estadoCandles as typeKline[]} />
+	<KlineLightweight data={estadoVelas as typeKline[]} />
 {/await}

@@ -12,29 +12,34 @@ export async function functionKlineAlpaca({
 	fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }) {
 	let url = '';
-	if (interval.includes('D')) {
+	// const headers = {
+	//     "Apca-Api-Key-Id": "SUA_API_KEY",
+	//     "Apca-Api-Secret-Key": "SEU_SECRET_KEY"
+	// };
+	// const response = await fetch(url, { headers });
+	if (interval === '1Day') {
 		const now = new Date();
 		const startDate = new Date(now);
 		startDate.setDate(now.getDate() - limit);
 		const startISO = startDate.toISOString();
 		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${encodeURIComponent(startISO)}&sort=asc`;
-	} else if (interval.includes('1Min')) {
+	} else if (interval === '1Min') {
 		const now = new Date();
 		now.setMinutes(now.getMinutes() - limit);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
 		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
-	} else if (interval.includes('5Min')) {
+	} else if (interval === '5Min') {
 		const now = new Date();
 		now.setMinutes(now.getMinutes() - limit * 5);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
 		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
-	} else if (interval.includes('15Min')) {
+	} else if (interval === '15Min') {
 		const now = new Date();
 		now.setMinutes(now.getMinutes() - limit * 15);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
 		console.log(timestamp);
 		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
-	} else if (interval.includes('1H')) {
+	} else if (interval === '1Hour') {
 		const now = new Date();
 		now.setHours(now.getHours() - limit);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
