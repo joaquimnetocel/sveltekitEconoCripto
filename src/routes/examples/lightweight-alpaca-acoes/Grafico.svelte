@@ -24,7 +24,7 @@
 
 	async function funcaoLerDados() {
 		const resposta = await fetch(
-			`/examples/lightweight-alpaca?moeda=${moeda}&periodo=${periodo}&quantidade=${quantidade}`,
+			`/examples/lightweight-alpaca-acoes?moeda=${moeda}&periodo=${periodo}&quantidade=${quantidade}`,
 		);
 		estadoVelas = await resposta.json();
 		console.log(estadoVelas);

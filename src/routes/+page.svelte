@@ -1,7 +1,8 @@
 <ul>
 	<li><a href="./examples/lightweight">LIGHTWEIGHT</a></li>
 	<li><a href="./examples/lightweight-mexc">LIGHTWEIGHT MEXC</a></li>
-	<li><a href="./examples/lightweight-alpaca">LIGHTWEIGHT ALPACA CRIPTO</a></li>
+	<li><a href="./examples/lightweight-alpaca-cripto">LIGHTWEIGHT ALPACA CRIPTO</a></li>
+	<li><a href="./examples/lightweight-alpaca-acoes">LIGHTWEIGHT ALPACA AÇÕES</a></li>
 </ul>
 
 <ul>

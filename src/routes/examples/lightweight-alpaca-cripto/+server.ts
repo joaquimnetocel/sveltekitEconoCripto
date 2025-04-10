@@ -1,4 +1,4 @@
-import { functionKlineAlpaca } from '$lib/functions/functionKlineAlpaca';
+import { functionKlineAlpaca } from '$lib/functions/functionKlineAlpacaCripto';
 import type { typeKline } from '$lib/types/typeKline';
 import type { typeMoedaAlpaca } from '$lib/types/typeMoedaAlpaca';
 import type { typePeriodoAlpaca } from '$lib/types/typePeriodoAlpaca';

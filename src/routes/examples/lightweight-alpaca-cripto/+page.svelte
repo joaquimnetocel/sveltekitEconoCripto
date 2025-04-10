@@ -66,7 +66,9 @@
 		onblur={funcaoPerdeFoco}
 	/>
 </div>
-
-{#if agora}
-	<Grafico {moeda} {periodo} {agora} {quantidade} />
-{/if}
+<br />
+<div>
+	{#if agora}
+		<Grafico {moeda} {periodo} {agora} {quantidade} />
+	{/if}
+</div>
