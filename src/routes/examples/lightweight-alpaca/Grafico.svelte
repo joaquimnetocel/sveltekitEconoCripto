@@ -7,22 +7,25 @@
 		agora,
 		moeda,
 		periodo = '1Day',
+		quantidade,
 	}: {
 		agora: Date;
 		moeda: string;
 		periodo?: typePeriodoAlpaca;
+		quantidade: number;
 	} = $props();
 
 	let estadoVelas = $state<typeKline[]>();
 
 	$effect(() => {
 		const intervalo = setInterval(funcaoLerDados, funcaoPeriodoParaSegundos(periodo) * 1000);
-		// const intervalo = setInterval(funcaoLerDados, 5 * 1000);
 		return () => clearInterval(intervalo); // LIMPA AO DESMONTAR.
 	});
 
 	async function funcaoLerDados() {
-		const resposta = await fetch(`/examples/lightweight-alpaca?moeda=${moeda}&periodo=${periodo}`);
+		const resposta = await fetch(
+			`/examples/lightweight-alpaca?moeda=${moeda}&periodo=${periodo}&quantidade=${quantidade}`,
+		);
 		estadoVelas = await resposta.json();
 		console.log(estadoVelas);
 	}

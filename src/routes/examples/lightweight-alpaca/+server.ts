@@ -8,10 +8,11 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ url, fetch }) => {
 	const moeda = url.searchParams.get('moeda') ?? 'BTC/USD';
 	const periodo = url.searchParams.get('periodo') ?? '1Day';
+	const quantidade = url.searchParams.get('quantidade') ?? '30';
 	const dados = await functionKlineAlpaca({
-		symbol: moeda as typeMoedaAlpaca,
-		interval: periodo as typePeriodoAlpaca,
-		limit: 5,
+		moeda: moeda as typeMoedaAlpaca,
+		periodo: periodo as typePeriodoAlpaca,
+		quantidade: parseInt(quantidade),
 		fetch,
 	});
 	const candles: typeKline[] = dados.map((current) => {

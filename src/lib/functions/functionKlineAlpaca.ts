@@ -1,14 +1,14 @@
 import type { typePeriodoAlpaca } from '$lib/types/typePeriodoAlpaca';
 
 export async function functionKlineAlpaca({
-	symbol,
-	interval,
-	limit,
+	moeda,
+	periodo,
+	quantidade,
 	fetch,
 }: {
-	symbol: string;
-	interval: typePeriodoAlpaca;
-	limit: number;
+	moeda: string;
+	periodo: typePeriodoAlpaca;
+	quantidade: number;
 	fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }) {
 	let url = '';
@@ -17,39 +17,39 @@ export async function functionKlineAlpaca({
 	//     "Apca-Api-Secret-Key": "SEU_SECRET_KEY"
 	// };
 	// const response = await fetch(url, { headers });
-	if (interval === '1Day') {
+	if (periodo === '1Day') {
 		const now = new Date();
 		const startDate = new Date(now);
-		startDate.setDate(now.getDate() - limit);
+		startDate.setDate(now.getDate() - quantidade);
 		const startISO = startDate.toISOString();
-		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${encodeURIComponent(startISO)}&sort=asc`;
-	} else if (interval === '1Min') {
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(moeda)}&timeframe=${periodo}&start=${encodeURIComponent(startISO)}&sort=asc`;
+	} else if (periodo === '1Min') {
 		const now = new Date();
-		now.setMinutes(now.getMinutes() - limit);
+		now.setMinutes(now.getMinutes() - quantidade);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
-		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
-	} else if (interval === '5Min') {
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(moeda)}&timeframe=${periodo}&start=${timestamp}`;
+	} else if (periodo === '5Min') {
 		const now = new Date();
-		now.setMinutes(now.getMinutes() - limit * 5);
+		now.setMinutes(now.getMinutes() - quantidade * 5);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
-		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
-	} else if (interval === '15Min') {
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(moeda)}&timeframe=${periodo}&start=${timestamp}`;
+	} else if (periodo === '15Min') {
 		const now = new Date();
-		now.setMinutes(now.getMinutes() - limit * 15);
+		now.setMinutes(now.getMinutes() - quantidade * 15);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
 		console.log(timestamp);
-		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
-	} else if (interval === '1Hour') {
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(moeda)}&timeframe=${periodo}&start=${timestamp}`;
+	} else if (periodo === '1Hour') {
 		const now = new Date();
-		now.setHours(now.getHours() - limit);
+		now.setHours(now.getHours() - quantidade);
 		const timestamp = now.toISOString().split('.')[0] + 'Z'; // Formato correto
-		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(symbol)}&timeframe=${interval}&start=${timestamp}`;
+		url = `https://data.alpaca.markets/v1beta3/crypto/us/bars?symbols=${encodeURIComponent(moeda)}&timeframe=${periodo}&start=${timestamp}`;
 		console.log(url);
 	}
 
 	const result = await fetch(url);
 	const aa = await result.json();
-	const bb = aa.bars[symbol];
+	const bb = aa.bars[moeda];
 	type cc = {
 		c: number;
 		h: number;
