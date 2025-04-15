@@ -9,7 +9,7 @@
 
 	let { data }: PageProps = $props();
 
-	let moeda = $state<typeMoedaAlpaca>('BTC/USD');
+	let simbolo = $state<typeMoedaAlpaca>('BTC/USD');
 	let periodo = $state<typePeriodoAlpaca>('1Day');
 	let agora = $state<Date>();
 	let estadoInputQuantidade = $state(30);
@@ -46,7 +46,7 @@
 	RELÓGIO: <Hora inicio={data.dateAlpaca} bind:agora />
 </div>
 <div>
-	MOEDA: <select bind:value={moeda}>
+	SÍMBOLO: <select bind:value={simbolo}>
 		{#each constMoedasAlpaca as current}
 			<option value={current}>{current}</option>
 		{/each}
@@ -69,6 +69,6 @@
 <br />
 <div>
 	{#if agora}
-		<Grafico {moeda} {periodo} {agora} {quantidade} />
+		<Grafico {simbolo} {periodo} {agora} {quantidade} />
 	{/if}
 </div>

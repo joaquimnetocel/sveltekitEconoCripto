@@ -5,12 +5,12 @@
 
 	let {
 		agora,
-		moeda,
+		simbolo,
 		periodo = '1Day',
 		quantidade,
 	}: {
 		agora: Date;
-		moeda: string;
+		simbolo: string;
 		periodo?: typePeriodoAlpaca;
 		quantidade: number;
 	} = $props();
@@ -24,7 +24,7 @@
 
 	async function funcaoLerDados() {
 		const resposta = await fetch(
-			`/examples/lightweight-alpaca-acoes?moeda=${moeda}&periodo=${periodo}&quantidade=${quantidade}`,
+			`/examples/lightweight-alpaca-acoes?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
 		);
 		estadoVelas = await resposta.json();
 		console.log(estadoVelas);
@@ -54,7 +54,7 @@
 	<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 {:then _}
 	<div>
-		{moeda} ({periodo})
+		{simbolo} ({periodo})
 	</div>
 	<KlineLightweight data={estadoVelas as typeKline[]} />
 {/await}
