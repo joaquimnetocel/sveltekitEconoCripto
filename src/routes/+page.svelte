@@ -2,10 +2,11 @@
 	<li>
 		EXEMPLOS:
 		<ul>
-			<li><a href="./examples/lightweight">LIGHTWEIGHT</a></li>
-			<li><a href="./examples/lightweight-mexc">LIGHTWEIGHT MEXC</a></li>
-			<li><a href="./examples/lightweight-alpaca-cripto">LIGHTWEIGHT ALPACA CRIPTO</a></li>
-			<li><a href="./examples/lightweight-alpaca-acoes">LIGHTWEIGHT ALPACA AÇÕES</a></li>
+			<li><a href="./examples/apexchart">APEXCHART SIMPLES</a></li>
+			<li><a href="./examples/lightweight">LIGHTWEIGHT SIMPLES</a></li>
+			<li><a href="./examples/mexc-lightweight">MEXC - LIGHTWEIGHT</a></li>
+			<li><a href="./examples/alpaca-lightweight-cripto">ALPACA - LIGHTWEIGHT - CRIPTO</a></li>
+			<li><a href="./examples/alpaca-lightweight-acoes">ALPACA - LIGHTWEIGHT - AÇÕES</a></li>
 		</ul>
 	</li>
 

@@ -1,5 +1,5 @@
 import { functionKlineMexc } from '$lib/functions/functionKlineMexc';
-import type { typeKline } from '$lib/types/typeKline';
+import type { typeKline } from '$lib/types/lightweight/typeKline';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

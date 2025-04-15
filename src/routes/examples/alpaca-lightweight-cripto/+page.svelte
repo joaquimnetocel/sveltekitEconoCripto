@@ -1,15 +1,15 @@
 <script lang="ts">
 	import Hora from '$lib/components/Hora.svelte';
-	import { constAcoesAlpaca } from '$lib/constantes/constAcoesAlpaca';
+	import { constMoedasAlpaca } from '$lib/constantes/constMoedasAlpaca';
 	import { constPeriodosAlpaca } from '$lib/constantes/constPeriodosAlpaca';
-	import type { typeAcaoAlpaca } from '$lib/types/typeAcaoAlpaca';
-	import type { typePeriodoAlpaca } from '$lib/types/typePeriodoAlpaca';
+	import type { typeMoedaAlpaca } from '$lib/types/alpaca/typeMoedaAlpaca';
+	import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
 	import type { PageProps } from './$types';
 	import Grafico from './Grafico.svelte';
 
 	let { data }: PageProps = $props();
 
-	let simbolo = $state<typeAcaoAlpaca>('TSLA');
+	let simbolo = $state<typeMoedaAlpaca>('BTC/USD');
 	let periodo = $state<typePeriodoAlpaca>('1Day');
 	let agora = $state<Date>();
 	let estadoInputQuantidade = $state(30);
@@ -47,7 +47,7 @@
 </div>
 <div>
 	SÍMBOLO: <select bind:value={simbolo}>
-		{#each constAcoesAlpaca as current}
+		{#each constMoedasAlpaca as current}
 			<option value={current}>{current}</option>
 		{/each}
 	</select>

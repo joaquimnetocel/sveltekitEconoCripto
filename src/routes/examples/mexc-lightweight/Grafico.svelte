@@ -1,6 +1,6 @@
 <script lang="ts">
 	import KlineLightweight from '$lib/components/KlineLightweight.svelte';
-	import type { typeKline } from '$lib/types/typeKline';
+	import type { typeKline } from '$lib/types/lightweight/typeKline';
 	import type { typePeriodoMexc } from '$lib/types/typePeriodoMexc';
 
 	let {
@@ -16,7 +16,7 @@
 	let estadoCandles = $state<typeKline[]>();
 
 	async function functionLoadData() {
-		const response = await fetch(`/examples/lightweight-mexc?moeda=${moeda}&periodo=${periodo}`);
+		const response = await fetch(`/examples/mexc-lightweight?moeda=${moeda}&periodo=${periodo}`);
 		estadoCandles = await response.json();
 	}
 

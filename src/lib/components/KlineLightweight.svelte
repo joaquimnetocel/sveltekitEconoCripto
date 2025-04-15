@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { typeKline } from '$lib/types/typeKline';
+	import type { typeKline } from '$lib/types/lightweight/typeKline';
 	import {
 		CandlestickSeries,
 		createChart,

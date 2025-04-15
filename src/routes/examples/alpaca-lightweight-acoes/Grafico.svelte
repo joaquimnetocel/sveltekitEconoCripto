@@ -1,7 +1,7 @@
 <script lang="ts">
 	import KlineLightweight from '$lib/components/KlineLightweight.svelte';
-	import type { typeKline } from '$lib/types/typeKline';
-	import type { typePeriodoAlpaca } from '$lib/types/typePeriodoAlpaca';
+	import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
+	import type { typeKline } from '$lib/types/lightweight/typeKline';
 
 	let {
 		agora,
@@ -24,7 +24,7 @@
 
 	async function funcaoLerDados() {
 		const resposta = await fetch(
-			`/examples/lightweight-alpaca-acoes?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
+			`/examples/alpaca-lightweight-acoes?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
 		);
 		estadoVelas = await resposta.json();
 		console.log(estadoVelas);

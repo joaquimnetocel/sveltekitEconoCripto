@@ -1,7 +1,8 @@
 import { PRIVATE_ALPACA_KEY, PRIVATE_ALPACA_SECRET } from '$env/static/private';
-import type { typePeriodoAlpaca } from '$lib/types/typePeriodoAlpaca';
+import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
+import type { typeVelaAlpaca } from '$lib/types/alpaca/typeVelaAlpaca';
 
-export async function functionKlineAlpaca({
+export async function funcaoAlpacaFetch({
 	tipo,
 	simbolo,
 	periodo,
@@ -52,28 +53,7 @@ export async function functionKlineAlpaca({
 	};
 
 	const result = await fetch(url, { headers });
-	const aa = await result.json();
-	const bb = aa.bars[simbolo];
-	type cc = {
-		c: number;
-		h: number;
-		l: number;
-		n: number;
-		o: number;
-		t: string;
-		v: number;
-		vw: number;
-	};
-	const dadosBrutos = <cc[]>bb;
-
-	return dadosBrutos.map((current) => {
-		return {
-			time: Math.floor(new Date(current.t).getTime() / 1000),
-			open: current.o,
-			high: current.h,
-			low: current.l,
-			close: current.c,
-			volume: current.v,
-		};
-	});
+	const json = await result.json();
+	const velas = json.bars[simbolo] as typeVelaAlpaca[];
+	return velas;
 }
