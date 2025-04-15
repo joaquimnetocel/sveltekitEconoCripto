@@ -2,7 +2,7 @@ import { funcaoAlpacaFetch } from '$lib/functions/funcaoAlpacaFetch';
 import { funcaoAlpacaParaLightweight } from '$lib/functions/funcaoAlpacaParaLightweight';
 import type { typeMoedaAlpaca } from '$lib/types/alpaca/typeMoedaAlpaca';
 import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
-import type { typeKline } from '$lib/types/lightweight/typeKline';
+import type { typeKline } from '$lib/types/lightweight/typeVela';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

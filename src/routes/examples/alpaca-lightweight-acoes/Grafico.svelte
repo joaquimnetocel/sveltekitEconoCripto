@@ -1,7 +1,7 @@
 <script lang="ts">
 	import KlineLightweight from '$lib/components/KlineLightweight.svelte';
 	import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
-	import type { typeKline } from '$lib/types/lightweight/typeKline';
+	import type { typeVela } from '$lib/types/lightweight/typeVela';
 
 	let {
 		agora,
@@ -15,7 +15,7 @@
 		quantidade: number;
 	} = $props();
 
-	let estadoVelas = $state<typeKline[]>();
+	let estadoVelas = $state<typeVela[]>();
 
 	$effect(() => {
 		const intervalo = setInterval(funcaoLerDados, funcaoPeriodoParaSegundos(periodo) * 1000);
@@ -56,5 +56,5 @@
 	<div>
 		{simbolo} ({periodo})
 	</div>
-	<KlineLightweight data={estadoVelas as typeKline[]} />
+	<KlineLightweight data={estadoVelas as typeVela[]} />
 {/await}

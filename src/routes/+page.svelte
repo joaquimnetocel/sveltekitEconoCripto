@@ -2,7 +2,7 @@
 	<li>
 		EXEMPLOS:
 		<ul>
-			<li><a href="./examples/apexchart">APEXCHART SIMPLES</a></li>
+			<li><a href="./examples/apex">APEX SIMPLES</a></li>
 			<li><a href="./examples/lightweight">LIGHTWEIGHT SIMPLES</a></li>
 			<li><a href="./examples/mexc-lightweight">MEXC - LIGHTWEIGHT</a></li>
 			<li><a href="./examples/alpaca-lightweight-cripto">ALPACA - LIGHTWEIGHT - CRIPTO</a></li>

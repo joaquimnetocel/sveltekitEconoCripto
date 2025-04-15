@@ -1,4 +1,4 @@
-export type typeKline = {
+export type typeVela = {
 	open: number;
 	high: number;
 	low: number;

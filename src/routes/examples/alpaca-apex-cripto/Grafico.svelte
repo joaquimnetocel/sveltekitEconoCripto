@@ -24,7 +24,7 @@
 
 	async function funcaoLerDados() {
 		const resposta = await fetch(
-			`/examples/alpaca-lightweight-cripto?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
+			`/examples/alpaca-apex-cripto?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
 		);
 		estadoVelas = await resposta.json();
 		console.log(estadoVelas);

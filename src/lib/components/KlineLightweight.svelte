@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { typeKline } from '$lib/types/lightweight/typeKline';
+	import type { typeVela } from '$lib/types/lightweight/typeVela';
 	import {
 		CandlestickSeries,
 		createChart,
@@ -13,7 +13,7 @@
 	let {
 		data,
 	}: {
-		data: typeKline[];
+		data: typeVela[];
 	} = $props();
 
 	let div = $state<HTMLDivElement>();
