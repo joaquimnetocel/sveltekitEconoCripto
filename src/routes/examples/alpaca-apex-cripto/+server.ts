@@ -2,7 +2,7 @@ import { funcaoAlpacaFetch } from '$lib/functions/funcaoAlpacaFetch';
 import { funcaoAlpacaParaLightweight } from '$lib/functions/funcaoAlpacaParaLightweight';
 import type { typeMoedaAlpaca } from '$lib/types/alpaca/typeMoedaAlpaca';
 import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
-import type { typeKline } from '$lib/types/lightweight/typeVela';
+import type { typeVela } from '$lib/types/lightweight/typeVela';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
@@ -19,7 +19,7 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 	});
 	const dados = await funcaoAlpacaParaLightweight(velas);
 
-	const candles: typeKline[] = dados.map((current) => {
+	const candles: typeVela[] = dados.map((current) => {
 		const { close, high, low, open, time } = current;
 		return { close, high, low, open, time };
 	});
