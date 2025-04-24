@@ -11,9 +11,9 @@
 	import { untrack } from 'svelte';
 
 	let {
-		data,
+		velas,
 	}: {
-		data: typeVela[];
+		velas: typeVela[];
 	} = $props();
 
 	let div = $state<HTMLDivElement>();
@@ -44,13 +44,13 @@
 				wickUpColor: '#26a69a',
 				wickDownColor: '#ef5350',
 			});
-			candlestickSeries.setData(untrack(() => data) as CandlestickData<Time>[]);
+			candlestickSeries.setData(untrack(() => velas) as CandlestickData<Time>[]);
 			chart.timeScale().fitContent();
 		}
 	});
 
 	$effect(() => {
-		candlestickSeries.setData(data as CandlestickData<Time>[]);
+		candlestickSeries.setData(velas as CandlestickData<Time>[]);
 	});
 </script>
 

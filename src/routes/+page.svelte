@@ -7,6 +7,7 @@
 			<li><a href="./examples/mexc-lightweight">MEXC - LIGHTWEIGHT</a></li>
 			<li><a href="./examples/alpaca-lightweight-cripto">ALPACA - LIGHTWEIGHT - CRIPTO</a></li>
 			<li><a href="./examples/alpaca-lightweight-acoes">ALPACA - LIGHTWEIGHT - AÇÕES</a></li>
+			<li><a href="./examples/alpaca-apex-cripto">ALPACA - APEX - CRIPTO</a></li>
 		</ul>
 	</li>
 

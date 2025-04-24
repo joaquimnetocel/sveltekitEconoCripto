@@ -1,5 +1,5 @@
 <script lang="ts">
-	import KlineLightweight from '$lib/components/KlineLightweight.svelte';
+	import LightweightVelas from '$lib/components/LightweightVelas.svelte';
 	import type { typeVela } from '$lib/types/lightweight/typeVela';
 	import type { typePeriodoMexc } from '$lib/types/mexc/typePeriodoMexc';
 
@@ -33,5 +33,5 @@
 	<div>
 		{moeda} ({periodo})
 	</div>
-	<KlineLightweight data={estadoCandles as typeVela[]} />
+	<LightweightVelas velas={estadoCandles as typeVela[]} />
 {/await}
