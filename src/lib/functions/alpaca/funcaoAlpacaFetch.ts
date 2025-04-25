@@ -1,6 +1,6 @@
 import { PRIVATE_ALPACA_KEY, PRIVATE_ALPACA_SECRET } from '$env/static/private';
+import type { typeVelaAlpaca } from '$lib/types/alpaca/typeDadoAlpaca';
 import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
-import type { typeVelaAlpaca } from '$lib/types/alpaca/typeVelaAlpaca';
 
 export async function funcaoAlpacaFetch({
 	tipo,

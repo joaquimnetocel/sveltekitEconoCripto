@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { constMoedasMexc } from '$lib/constantes/constMoedasMexc';
-	import { constPeriodosMexc } from '$lib/constantes/constPeriodosMexc';
+	import { constMoedasMexc } from '$lib/constantes/mexc/constMoedasMexc';
+	import { constPeriodosMexc } from '$lib/constantes/mexc/constPeriodosMexc';
 	import type { typeMoedaMexc } from '$lib/types/mexc/typeMoedaMexc';
 	import type { typePeriodoMexc } from '$lib/types/typePeriodoMexc';
 	import Grafico from './Grafico.svelte';

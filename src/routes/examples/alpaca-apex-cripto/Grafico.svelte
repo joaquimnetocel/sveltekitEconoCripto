@@ -1,7 +1,11 @@
 <script lang="ts">
 	import LightweightVelas from '$lib/components/LightweightVelas.svelte';
+	import { funcaoSegundosRestantes } from '$lib/functions/alpaca/funcaoSegundosRestantes';
+	import { funcaoAlpacaParaLightweight } from '$lib/functions/funcaoAlpacaParaLightweight';
+	import { funcaoVelasLightWeight } from '$lib/functions/lightweight/funcaoVelasLightweight';
+	import type { typeDadoAlpaca } from '$lib/types/alpaca/typeDadoAlpaca';
 	import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
-	import type { typeVela } from '$lib/types/lightweight/typeVela';
+	import type { typeVelaLightWeight } from '$lib/types/lightweight/typeVelaLightWeight';
 
 	let {
 		agora,
@@ -15,10 +19,13 @@
 		quantidade: number;
 	} = $props();
 
-	let estadoVelas = $state<typeVela[]>();
+	let estadoVelas = $state<typeVelaLightWeight[]>();
 
 	$effect(() => {
-		const intervalo = setInterval(funcaoLerDados, funcaoPeriodoParaSegundos(periodo) * 1000);
+		const intervalo = setInterval(
+			funcaoLerDados,
+			funcaoSegundosRestantes({ periodo, agora }) * 1000,
+		);
 		return () => clearInterval(intervalo); // LIMPA AO DESMONTAR.
 	});
 
@@ -26,26 +33,11 @@
 		const resposta = await fetch(
 			`/examples/alpaca-apex-cripto?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
 		);
-		estadoVelas = await resposta.json();
-		console.log(estadoVelas);
-	}
-
-	function funcaoPeriodoParaSegundos(par: typePeriodoAlpaca) {
-		if (par === '15Min') {
-			const numberMinutosRestantes =
-				15 - (agora.getMinutes() - Math.floor(agora.getMinutes() / 15) * 15);
-			return numberMinutosRestantes * 60;
-		} else if (par === '5Min') {
-			const numberMinutosRestantes =
-				5 - (agora.getMinutes() - Math.floor(agora.getMinutes() / 5) * 5);
-			return numberMinutosRestantes * 60;
-		} else if (par === '1Min') {
-			return 60 - agora.getSeconds() + 3;
-		} else if (par === '1Hour') {
-			const numberMinutosRestantes = 60 - agora.getMinutes() + 1;
-			return 60 * numberMinutosRestantes;
-		}
-		return 10000000000000;
+		const jsonResposta = await resposta.json();
+		const arrayDadosAlpaca = jsonResposta as typeDadoAlpaca[];
+		const arrayDadosLightWeight = await funcaoAlpacaParaLightweight(arrayDadosAlpaca);
+		const arrayVelasLightweigth = funcaoVelasLightWeight(arrayDadosLightWeight);
+		estadoVelas = arrayVelasLightweigth;
 	}
 </script>
 
@@ -56,5 +48,5 @@
 	<div>
 		{simbolo} ({periodo})
 	</div>
-	<LightweightVelas velas={estadoVelas as typeVela[]} />
+	<LightweightVelas velas={estadoVelas as typeVelaLightWeight[]} />
 {/await}

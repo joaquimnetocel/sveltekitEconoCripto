@@ -1,4 +1,4 @@
-export type typeVelaAlpaca = {
+export type typeDadoAlpaca = {
 	c: number;
 	h: number;
 	l: number;

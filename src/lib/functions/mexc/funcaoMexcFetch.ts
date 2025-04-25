@@ -1,7 +1,7 @@
 import { PRIVATE_MEXC_KEY, PRIVATE_MEXC_SECRET } from '$env/static/private';
 import crypto from 'crypto';
 
-export async function functionKlineMexc({
+export async function functionMexcFetch({
 	symbol,
 	interval,
 	limit,

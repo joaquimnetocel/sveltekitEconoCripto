@@ -1,6 +1,6 @@
 <script lang="ts">
 	import LightweightVelas from '$lib/components/LightweightVelas.svelte';
-	import type { typeVela } from '$lib/types/lightweight/typeVela';
+	import type { typeVela } from '$lib/types/lightweight/typeVelaLightWeight';
 	import type { typePeriodoMexc } from '$lib/types/mexc/typePeriodoMexc';
 
 	let {

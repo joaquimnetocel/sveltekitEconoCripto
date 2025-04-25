@@ -4,7 +4,7 @@ const apiKey = 'mx0vglNZysJrDIUm96';
 const apiSecret = '08a5ec2b847a4bf78357ce04d8adab37';
 const client = new Mexc.Spot(apiKey, apiSecret);
 
-export function functionKlineMexc({
+export function funcaoMexcFetchComApi({
 	symbol,
 	interval,
 	limit,

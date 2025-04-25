@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Hora from '$lib/components/Hora.svelte';
-	import { constAcoesAlpaca } from '$lib/constantes/constAcoesAlpaca';
-	import { constPeriodosAlpaca } from '$lib/constantes/constPeriodosAlpaca';
+	import { constAcoesAlpaca } from '$lib/constantes/alpaca/constAcoesAlpaca';
+	import { constPeriodosAlpaca } from '$lib/constantes/alpaca/constPeriodosAlpaca';
 	import type { typeAcaoAlpaca } from '$lib/types/alpaca/typeAcaoAlpaca';
 	import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
 	import type { PageProps } from './$types';
