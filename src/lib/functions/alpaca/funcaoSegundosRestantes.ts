@@ -1,12 +1,6 @@
-import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
+// import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
 
-export function funcaoSegundosRestantes({
-	periodo,
-	agora,
-}: {
-	periodo: typePeriodoAlpaca;
-	agora: Date;
-}) {
+export function funcaoSegundosRestantes({ periodo, agora }: { periodo: string; agora: Date }) {
 	if (periodo === '15Min') {
 		const numberMinutosRestantes =
 			15 - (agora.getMinutes() - Math.floor(agora.getMinutes() / 15) * 15);

@@ -5,13 +5,13 @@ export async function funcaoHorarioAlpaca({
 }: {
 	fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 }) {
-	const response = await fetch(PRIVATE_ALPACA_URL, {
+	const resposta = await fetch(PRIVATE_ALPACA_URL, {
 		headers: {
 			'APCA-API-KEY-ID': PRIVATE_ALPACA_KEY,
 			'APCA-API-SECRET-KEY': PRIVATE_ALPACA_SECRET,
 		},
 	});
-	const data = await response.json();
+	const data = await resposta.json();
 	const hora = new Date(data.timestamp);
 
 	return hora;

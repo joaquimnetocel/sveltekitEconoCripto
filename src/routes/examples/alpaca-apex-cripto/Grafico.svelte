@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LightweightVelas from '$lib/components/LightweightVelas.svelte';
+	import LightweightVelas from '$lib/componentes/LightweightVelas.svelte';
 	import { funcaoSegundosRestantes } from '$lib/functions/alpaca/funcaoSegundosRestantes';
 	import { funcaoAlpacaParaLightweight } from '$lib/functions/funcaoAlpacaParaLightweight';
 	import { funcaoVelasLightWeight } from '$lib/functions/lightweight/funcaoVelasLightweight';
@@ -43,8 +43,7 @@
 
 {#await funcaoLerDados()}
 	<div>CARREGANDO...</div>
-	<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-{:then _}
+{:then}
 	<div>
 		{simbolo} ({periodo})
 	</div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ApexCandleChart from '$lib/components/ApexVelas.svelte';
+	import ApexCandleChart from '$lib/componentes/ApexVelas.svelte';
 	import type { PageProps } from './$types.js';
 
 	let { data }: PageProps = $props();
