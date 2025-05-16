@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { typeVela } from '$lib/types/apex/typeVela';
+	import type { typeVelaApex } from '$lib/types/apex/typeVelaApex';
 	import type ApexCharts from 'apexcharts';
 	import { untrack } from 'svelte';
 
 	let {
 		velas,
 	}: {
-		velas: typeVela[];
+		velas: typeVelaApex[];
 	} = $props();
 
 	let elemento = $state<HTMLDivElement>();
@@ -28,6 +28,9 @@
 		// },
 		xaxis: {
 			type: 'datetime',
+			labels: {
+				datetimeUTC: false, // <- Isso impede a conversão para horário local
+			},
 		},
 		yaxis: {
 			tooltip: {

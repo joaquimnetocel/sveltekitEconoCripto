@@ -1,4 +1,4 @@
-import type { typeVela } from '$lib/types/apex/typeVela';
+import type { typeVela } from '$lib/types/apex/typeVelaApex';
 
 export const velas: typeVela[] = [
 	{

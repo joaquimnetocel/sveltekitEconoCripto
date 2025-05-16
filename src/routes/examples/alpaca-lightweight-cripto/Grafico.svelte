@@ -1,10 +1,8 @@
 <script lang="ts">
 	import LightweightVelas from '$lib/componentes/LightweightVelas.svelte';
-	import { funcaoSegundosRestantes } from '$lib/functions/alpaca/funcaoSegundosRestantes';
-	import { funcaoAlpacaParaLightweight } from '$lib/functions/funcaoAlpacaParaLightweight';
+	import { funcaoAlpacaParaLightweight } from '$lib/functions/lightweight/funcaoAlpacaParaLightweight';
 	import { funcaoVelasLightWeight } from '$lib/functions/lightweight/funcaoVelasLightweight';
 	import type { typeDadoAlpaca } from '$lib/types/alpaca/typeDadoAlpaca';
-	// import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
 	import type { typeVelaLightWeight } from '$lib/types/lightweight/typeVelaLightWeight';
 
 	let {
@@ -21,14 +19,6 @@
 
 	let estadoVelas = $state<typeVelaLightWeight[]>();
 
-	$effect(() => {
-		const primeiro_intervalo = setInterval(
-			funcaoPreencherVelas,
-			funcaoSegundosRestantes({ periodo, agora }) * 1000,
-		);
-		return () => clearInterval(primeiro_intervalo); // LIMPA AO DESMONTAR.
-	});
-
 	async function funcaoPreencherVelas() {
 		const dados_sem_tipagem = await funcaoLerDados();
 		const arrayDadosAlpaca = dados_sem_tipagem as typeDadoAlpaca[];
@@ -43,13 +33,41 @@
 		);
 		return await resposta.json();
 	}
+
+	let minuto = $derived(agora.getMinutes());
+	let hora = $derived(agora.getHours());
+
+	$effect(() => {
+		if (periodo === '1Min') {
+			void minuto;
+			funcaoPreencherVelas();
+			console.log(`ATINGIU PERIODO DE 1 MINUTO`);
+		} else if (periodo === '5Min') {
+			if (minuto % 5 !== 1) return;
+			funcaoPreencherVelas();
+			console.log('ATINGIU PERIODO DE 5 MINUTOS');
+		} else if (periodo === '15Min') {
+			if (minuto % 15 !== 1) return;
+			funcaoPreencherVelas();
+			console.log('ATINGIU PERIODO DE 15 MINUTOS');
+		} else if (periodo === '1Hour') {
+			if (minuto !== 1) return;
+			funcaoPreencherVelas();
+			console.log('ATINGIU PERIODO DE 1 HORA');
+		} else if (periodo === '1Day') {
+			if (hora !== 21 || minuto !== 1) return;
+			funcaoPreencherVelas();
+			console.log('ATINGIU PERIODO DE 1 HORA');
+		}
+	});
 </script>
+
+<div>
+	{simbolo} ({periodo})
+</div>
 
 {#await funcaoPreencherVelas()}
 	<div>CARREGANDO...</div>
 {:then}
-	<div>
-		{simbolo} ({periodo})
-	</div>
 	<LightweightVelas velas={estadoVelas as typeVelaLightWeight[]} />
 {/await}
