@@ -1,11 +1,11 @@
 <script lang="ts">
 	import LightweightVelas from '$lib/componentes/LightweightVelas.svelte';
 	import { funcaoAlpacaParaLightweight } from '$lib/functions/lightweight/funcaoAlpacaParaLightweight';
+	import { funcaoCriarMediaMovelLightweight } from '$lib/functions/lightweight/funcaoCriarMediaMovelLightweight';
 	import { funcaoVelasLightWeight } from '$lib/functions/lightweight/funcaoVelasLightweight';
 	import type { typeDadoAlpaca } from '$lib/types/alpaca/typeDadoAlpaca';
 	import type { typeLinhaLightweight } from '$lib/types/lightweight/typeLinhaLightweight';
 	import type { typeVelaLightWeight } from '$lib/types/lightweight/typeVelaLightWeight';
-	import { SMA } from 'technicalindicators';
 
 	let {
 		agora,
@@ -19,31 +19,18 @@
 		quantidade: number;
 	} = $props();
 
-	let estadoVelas = $state<typeVelaLightWeight[]>();
+	let velas = $state<typeVelaLightWeight[]>();
 	let linhas = $state<typeLinhaLightweight[]>([]);
 
-	function funcaoCriarMediaMovel(periodo: number): typeLinhaLightweight['dados'] {
-		if (estadoVelas === undefined) return [];
-		const fechamentos = estadoVelas.map((current) => current.close);
-		const mediasmoveis = SMA.calculate({ period: periodo, values: fechamentos });
-		const velasnaoqueimadas = estadoVelas.slice(periodo - 1);
-		return velasnaoqueimadas.map((current, i) => {
-			return {
-				time: current.time,
-				value: mediasmoveis[i],
-			};
-		});
-	}
-
 	function funcaoCalcularMediasMoveis() {
-		if (estadoVelas === undefined) return;
+		if (velas === undefined) return;
 		linhas[0] = {
 			opcoes: {
 				color: 'red',
 				lineStyle: 2,
 				lineWidth: 2,
 			},
-			dados: funcaoCriarMediaMovel(5),
+			dados: funcaoCriarMediaMovelLightweight(velas, 5),
 		};
 		linhas[1] = {
 			opcoes: {
@@ -51,7 +38,7 @@
 				lineStyle: 2,
 				lineWidth: 2,
 			},
-			dados: funcaoCriarMediaMovel(10),
+			dados: funcaoCriarMediaMovelLightweight(velas, 10),
 		};
 	}
 
@@ -60,7 +47,7 @@
 		const arrayDadosAlpaca = dados_sem_tipagem as typeDadoAlpaca[];
 		const arrayDadosLightWeight = await funcaoAlpacaParaLightweight(arrayDadosAlpaca);
 		const arrayVelasLightweigth = funcaoVelasLightWeight(arrayDadosLightWeight);
-		estadoVelas = arrayVelasLightweigth;
+		velas = arrayVelasLightweigth;
 		funcaoCalcularMediasMoveis();
 	}
 
@@ -106,5 +93,5 @@
 {#await funcaoDados()}
 	<div>CARREGANDO...</div>
 {:then}
-	<LightweightVelas velas={estadoVelas as typeVelaLightWeight[]} {linhas} />
+	<LightweightVelas velas={velas as typeVelaLightWeight[]} {linhas} />
 {/await}
