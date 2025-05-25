@@ -50,14 +50,13 @@
 			});
 
 			untrack(() => {
+				// NÃO SEI SE O UNTRACK É NECESSÁRIO
 				lineSeries = linhas.map((linha) => {
 					const serie = chart.addSeries(LineSeries, linha.opcoes);
-					serie.setData(linha.dados as LineData<Time>[]);
 					return serie;
 				});
 			});
 
-			candlestickSeries.setData(untrack(() => velas) as CandlestickData<Time>[]);
 			chart.timeScale().fitContent();
 		}
 		return () => {
