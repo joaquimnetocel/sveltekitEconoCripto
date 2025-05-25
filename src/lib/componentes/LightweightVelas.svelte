@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { typeLinhaLightweight } from '$lib/types/lightweight/typeLinhaLightweight';
 	import type { typeVelaLightWeight } from '$lib/types/lightweight/typeVelaLightWeight';
+	import type { ISeriesApi } from 'lightweight-charts';
 	import {
 		CandlestickSeries,
 		createChart,
@@ -8,6 +9,7 @@
 		type CandlestickData,
 		type ChartOptions,
 		type DeepPartial,
+		type IChartApi,
 		type LineData,
 		type Time,
 	} from 'lightweight-charts';
@@ -32,23 +34,13 @@
 		},
 	};
 
-	let candlestickSeries: ReturnType<typeof createChart>['addSeries'] extends (
-		type: infer T,
-		options?: infer O,
-	) => infer R
-		? R
-		: never;
-
-	let lineSeries: (ReturnType<typeof createChart>['addSeries'] extends (
-		type: infer T,
-		options?: infer O,
-	) => infer R
-		? R
-		: never)[] = [];
+	let chart: IChartApi;
+	let candlestickSeries: ISeriesApi<'Candlestick'>;
+	let lineSeries: ISeriesApi<'Line'>[] = [];
 
 	$effect(() => {
 		if (div) {
-			const chart = createChart(div, chartOptions);
+			chart = createChart(div, chartOptions);
 			candlestickSeries = chart.addSeries(CandlestickSeries, {
 				upColor: '#26a69a',
 				downColor: '#ef5350',
@@ -58,23 +50,27 @@
 			});
 
 			untrack(() => {
-				linhas.forEach((linha, i) => {
-					lineSeries[i] = chart.addSeries(LineSeries, linha.opcoes);
-					lineSeries[i].setData(linha.dados as LineData<Time>[]);
+				lineSeries = linhas.map((linha) => {
+					const serie = chart.addSeries(LineSeries, linha.opcoes);
+					serie.setData(linha.dados as LineData<Time>[]);
+					return serie;
 				});
 			});
 
 			candlestickSeries.setData(untrack(() => velas) as CandlestickData<Time>[]);
 			chart.timeScale().fitContent();
 		}
+		return () => {
+			if (chart) chart.remove();
+		};
 	});
 
 	$effect(() => {
 		candlestickSeries.setData(velas as CandlestickData<Time>[]);
-		linhas.forEach((linha, i) => {
-			lineSeries[i].setData(linha.dados as LineData<Time>[]);
+		lineSeries.forEach((serie, i) => {
+			serie.setData(linhas[i].dados as LineData<Time>[]);
 		});
 	});
 </script>
 
-<div bind:this={div} id="divGrafico" style="width: 100%; height: 300px;"></div>
+<div bind:this={div} style="width: 100%; height: 300px;"></div>
