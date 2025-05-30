@@ -30,7 +30,10 @@
 				lineStyle: 2,
 				lineWidth: 2,
 			},
-			dados: funcaoCriarMediaMovelLightweight(velas, 5),
+			dados: funcaoCriarMediaMovelLightweight({
+				velas,
+				periodo: 5,
+			}),
 		};
 		linhas[1] = {
 			opcoes: {
@@ -38,7 +41,7 @@
 				lineStyle: 2,
 				lineWidth: 2,
 			},
-			dados: funcaoCriarMediaMovelLightweight(velas, 10),
+			dados: funcaoCriarMediaMovelLightweight({ velas, periodo: 10 }),
 		};
 	}
 

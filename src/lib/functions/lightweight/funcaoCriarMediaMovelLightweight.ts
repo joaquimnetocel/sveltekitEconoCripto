@@ -2,10 +2,13 @@ import { funcaoMediaMovel } from '$lib/functions/indicadores/funcaoMediaMovel';
 import type { typeLinhaLightweight } from '$lib/types/lightweight/typeLinhaLightweight';
 import type { typeVelaLightWeight } from '$lib/types/lightweight/typeVelaLightWeight';
 
-export function funcaoCriarMediaMovelLightweight(
-	velas: typeVelaLightWeight[],
-	periodo: number,
-): typeLinhaLightweight['dados'] {
+export function funcaoCriarMediaMovelLightweight({
+	velas,
+	periodo,
+}: {
+	velas: typeVelaLightWeight[];
+	periodo: number;
+}): typeLinhaLightweight['dados'] {
 	if (velas === undefined) return [];
 	const fechamentos = velas.map((current) => current.close);
 	const mediasmoveis = funcaoMediaMovel({
