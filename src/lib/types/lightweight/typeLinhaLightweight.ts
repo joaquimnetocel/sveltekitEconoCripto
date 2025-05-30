@@ -7,7 +7,7 @@ import {
 type typeOpcoes = DeepPartial<LineStyleOptions & SeriesOptionsCommon> | undefined;
 type typeDados = {
 	time: number;
-	value: number;
+	value: number | undefined;
 }[];
 
 export type typeLinhaLightweight = {

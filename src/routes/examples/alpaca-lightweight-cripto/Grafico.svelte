@@ -1,11 +1,14 @@
 <script lang="ts">
+	import LightweightLinhas from '$lib/componentes/LightweightLinhas.svelte';
 	import LightweightVelas from '$lib/componentes/LightweightVelas.svelte';
 	import { funcaoAlpacaParaLightweight } from '$lib/functions/lightweight/funcaoAlpacaParaLightweight';
 	import { funcaoCriarMediaMovelLightweight } from '$lib/functions/lightweight/funcaoCriarMediaMovelLightweight';
+	import { funcaoCriarRsiLightweight } from '$lib/functions/lightweight/funcaoCriarRsiLightweight';
 	import { funcaoVelasLightWeight } from '$lib/functions/lightweight/funcaoVelasLightweight';
 	import type { typeDadoAlpaca } from '$lib/types/alpaca/typeDadoAlpaca';
 	import type { typeLinhaLightweight } from '$lib/types/lightweight/typeLinhaLightweight';
 	import type { typeVelaLightWeight } from '$lib/types/lightweight/typeVelaLightWeight';
+	import { funcaoFetchDosDados } from './funcaoFetchDosDados';
 
 	let {
 		agora,
@@ -20,11 +23,12 @@
 	} = $props();
 
 	let velas = $state<typeVelaLightWeight[]>();
-	let linhas = $state<typeLinhaLightweight[]>([]);
+	let mediasmoveis = $state<typeLinhaLightweight[]>([]);
+	let rsi = $state<typeLinhaLightweight[]>([]);
 
 	function funcaoCalcularMediasMoveis() {
 		if (velas === undefined) return;
-		linhas[0] = {
+		mediasmoveis[0] = {
 			opcoes: {
 				color: 'red',
 				lineStyle: 2,
@@ -35,7 +39,7 @@
 				periodo: 5,
 			}),
 		};
-		linhas[1] = {
+		mediasmoveis[1] = {
 			opcoes: {
 				color: 'orange',
 				lineStyle: 2,
@@ -45,20 +49,41 @@
 		};
 	}
 
+	function funcaoCalcularRsi() {
+		if (velas === undefined) return;
+		rsi[0] = {
+			opcoes: {
+				color: 'red',
+				lineStyle: 2,
+				lineWidth: 2,
+			},
+			dados: funcaoCriarRsiLightweight({
+				velas,
+				periodo: 5,
+			}),
+		};
+		rsi[1] = {
+			opcoes: {
+				color: 'orange',
+				lineStyle: 2,
+				lineWidth: 2,
+			},
+			dados: funcaoCriarRsiLightweight({ velas, periodo: 10 }),
+		};
+	}
+
 	async function funcaoDados() {
-		const dados_sem_tipagem = await funcaoLerDados();
+		const dados_sem_tipagem = await funcaoFetchDosDados({
+			periodo,
+			quantidade,
+			simbolo,
+		});
 		const arrayDadosAlpaca = dados_sem_tipagem as typeDadoAlpaca[];
 		const arrayDadosLightWeight = await funcaoAlpacaParaLightweight(arrayDadosAlpaca);
 		const arrayVelasLightweigth = funcaoVelasLightWeight(arrayDadosLightWeight);
 		velas = arrayVelasLightweigth;
 		funcaoCalcularMediasMoveis();
-	}
-
-	async function funcaoLerDados() {
-		const resposta = await fetch(
-			`/examples/alpaca-lightweight-cripto?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
-		);
-		return await resposta.json();
+		funcaoCalcularRsi();
 	}
 
 	let minuto = $derived(agora.getMinutes());
@@ -96,5 +121,6 @@
 {#await funcaoDados()}
 	<div>CARREGANDO...</div>
 {:then}
-	<LightweightVelas velas={velas as typeVelaLightWeight[]} {linhas} />
+	<LightweightVelas velas={velas as typeVelaLightWeight[]} linhas={mediasmoveis} />
+	<LightweightLinhas linhas={rsi} />
 {/await}

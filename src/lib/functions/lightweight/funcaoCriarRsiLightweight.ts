@@ -1,8 +1,9 @@
-import { funcaoMediaMovel } from '$lib/functions/indicadores/funcaoMediaMovel';
+import { funcaoRsi } from '$lib/functions/indicadores/funcaoRsi';
+
 import type { typeLinhaLightweight } from '$lib/types/lightweight/typeLinhaLightweight';
 import type { typeVelaLightWeight } from '$lib/types/lightweight/typeVelaLightWeight';
 
-export function funcaoCriarMediaMovelLightweight({
+export function funcaoCriarRsiLightweight({
 	velas,
 	periodo,
 }: {
@@ -11,18 +12,21 @@ export function funcaoCriarMediaMovelLightweight({
 }): typeLinhaLightweight['dados'] {
 	if (velas === undefined) return [];
 	const fechamentos = velas.map((current) => current.close);
-	const mediasmoveis = funcaoMediaMovel({
+	const rsi = funcaoRsi({
 		periodo,
 		valores: fechamentos,
 	});
 
-	const velasnaoqueimadas = velas.slice(periodo - 1);
-	const aa = velasnaoqueimadas.map((current, i) => {
+	return velas.map((current, i) => {
+		if (i < periodo) {
+			return {
+				time: current.time,
+				value: undefined,
+			};
+		}
 		return {
 			time: current.time,
-			value: mediasmoveis[i],
+			value: rsi[i - periodo],
 		};
 	});
-	// console.log(aa);
-	return aa;
 }
