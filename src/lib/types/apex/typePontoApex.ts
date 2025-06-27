@@ -1,4 +1,4 @@
-export type typePonto = {
+export type typePontoApex = {
 	x: Date;
 	y: number | null;
 };

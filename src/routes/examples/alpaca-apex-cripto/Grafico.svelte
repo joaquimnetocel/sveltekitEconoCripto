@@ -4,6 +4,7 @@
 	import type { typeDadoAlpaca } from '$lib/types/alpaca/typeDadoAlpaca';
 	import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
 	import type { typeVelaApex } from '$lib/types/apex/typeVelaApex';
+	import { funcaoFetch } from './funcaoFetch';
 
 	let {
 		agora,
@@ -20,17 +21,14 @@
 	let estadoVelas = $state<typeVelaApex[]>();
 
 	async function funcaoPreencherVelas() {
-		const dados_sem_tipagem = await funcaoLerDados();
+		const dados_sem_tipagem = await funcaoFetch({
+			periodo,
+			quantidade,
+			simbolo,
+		});
 		const arrayDadosAlpaca = dados_sem_tipagem as typeDadoAlpaca[];
 		const arrayVelasApex = await funcaoAlpacaParaApex(arrayDadosAlpaca);
 		estadoVelas = arrayVelasApex;
-	}
-
-	async function funcaoLerDados() {
-		const resposta = await fetch(
-			`/examples/alpaca-apex-cripto?simbolo=${simbolo}&periodo=${periodo}&quantidade=${quantidade}`,
-		);
-		return await resposta.json();
 	}
 
 	let minuto = $derived(agora.getMinutes());
