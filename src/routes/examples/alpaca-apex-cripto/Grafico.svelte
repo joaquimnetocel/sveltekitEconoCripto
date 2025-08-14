@@ -1,8 +1,11 @@
 <script lang="ts">
 	import ApexVelas from '$lib/componentes/ApexVelas.svelte';
 	import { funcaoAlpacaParaApex } from '$lib/functions/apex/funcaoAlpacaParaApex';
+	import { funcaoCriarMediaMovelApex } from '$lib/functions/apex/funcaoCriarMediaMovelApex';
+	// import { funcaoCriarRsiApex } from '$lib/functions/apex/funcaoCriarRsiApex';
 	import type { typeDadoAlpaca } from '$lib/types/alpaca/typeDadoAlpaca';
 	import type { typePeriodoAlpaca } from '$lib/types/alpaca/typePeriodoAlpaca';
+	import type { typeLinhaApex } from '$lib/types/apex/typeLinhaApex';
 	import type { typeVelaApex } from '$lib/types/apex/typeVelaApex';
 	import { funcaoFetch } from './funcaoFetch';
 
@@ -18,7 +21,49 @@
 		quantidade: number;
 	} = $props();
 
-	let estadoVelas = $state<typeVelaApex[]>();
+	let velas = $state<typeVelaApex[]>();
+	let mediasmoveis = $state<typeLinhaApex[]>([]);
+	// let rsi = $state<typeLinhaApex[]>([]);
+
+	function funcaoCalcularMediasMoveis() {
+		if (velas === undefined) return;
+		mediasmoveis[0] = {
+			descricao: 'MÉDIA MÓVEL SIMPLES (5)',
+			cor: 'blue',
+			pontos: funcaoCriarMediaMovelApex({
+				velas,
+				periodo: 5,
+			}),
+		};
+		mediasmoveis[1] = {
+			descricao: 'MÉDIA MÓVEL SIMPLES (10)',
+			cor: 'red',
+			pontos: funcaoCriarMediaMovelApex({ velas, periodo: 10 }),
+		};
+	}
+
+	// function funcaoCalcularRsi() {
+	// 	if (velas === undefined) return;
+	// 	rsi[0] = {
+	// 		opcoes: {
+	// 			color: 'red',
+	// 			lineStyle: 2,
+	// 			lineWidth: 2,
+	// 		},
+	// 		dados: funcaoCriarRsiApex({
+	// 			velas,
+	// 			periodo: 5,
+	// 		}),
+	// 	};
+	// 	rsi[1] = {
+	// 		opcoes: {
+	// 			color: 'orange',
+	// 			lineStyle: 2,
+	// 			lineWidth: 2,
+	// 		},
+	// 		dados: funcaoCriarRsiApex({ velas, periodo: 10 }),
+	// 	};
+	// }
 
 	async function funcaoPreencherVelas() {
 		const dados_sem_tipagem = await funcaoFetch({
@@ -28,7 +73,8 @@
 		});
 		const arrayDadosAlpaca = dados_sem_tipagem as typeDadoAlpaca[];
 		const arrayVelasApex = await funcaoAlpacaParaApex(arrayDadosAlpaca);
-		estadoVelas = arrayVelasApex;
+		velas = arrayVelasApex;
+		funcaoCalcularMediasMoveis();
 	}
 
 	let minuto = $derived(agora.getMinutes());
@@ -66,5 +112,5 @@
 {#await funcaoPreencherVelas()}
 	<div>CARREGANDO...</div>
 {:then}
-	<ApexVelas velas={estadoVelas as typeVelaApex[]} />
+	<ApexVelas velas={velas as typeVelaApex[]} linhas={mediasmoveis} />
 {/await}
